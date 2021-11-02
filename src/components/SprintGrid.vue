@@ -2,8 +2,17 @@
 <div>
   <v-container> <!-- Sprint Headers -->
     <v-row>
+      <v-col>
+        <v-card
+          height="100%"
+        >
+          <v-card-title>
+            Q1 2022
+          </v-card-title>
+        </v-card>
+      </v-col>
       <v-col
-        v-for="n in 6"
+        v-for="n in $store.state.numSprints"
         :key="n"
         cols="12"
         sm="2"
