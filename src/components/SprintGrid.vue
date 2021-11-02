@@ -1,5 +1,6 @@
 <template>
-  <v-container>
+<div>
+  <v-container> <!-- Sprint Headers -->
     <v-row>
       <v-col
         v-for="n in 6"
@@ -35,11 +36,46 @@
       </v-col>
     </v-row>
   </v-container>
+<!-- Features -->
+  <v-container
+    v-for="feature in $store.state.features"
+    :key="feature.id"
+  > 
+    <Feature
+      :feature="feature"
+    ></Feature>
+  </v-container>
+  
+  <!-- Add Feature btn -->
+  <v-btn 
+      class="mx-2"
+      fab
+      dark
+      color="indigo"
+      @click="addFeature()"
+    >
+      <v-icon dark>
+        mdi-plus
+      </v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script>
-export default {
+  import Feature from '../components/Feature.vue'
 
+export default {
+  components: {
+    Feature,
+  },
+  data: () => ({
+    
+  }),
+  methods: {
+    addFeature() {
+      this.$store.commit('addFeature');
+    }
+  }
 }
 </script>
 
