@@ -6,44 +6,45 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     features: [
-      {
-        id: 1,
-        title: 'BPayLoader 1.6',
-        tShirt: 50,
-        sprints: [
-          {
-            id: 1424201, //{feature num} + {sprint num to two decimal places}
-            workItems: [
-              { id: 12345, title: "Dev", icon: "mdi-xml", colour: "blue darken-4" }
-            ],
-          },
-          {
-            id: 102,
-            workItems: [
-              { id: 12346, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3" }
-            ],
-          },
-        ]
-      },
-      {
-        id: 2,
-        title: 'NEWCAPP 2.1',
-        tShirt: 100,
-        sprints: [
-          {
-            id: 201,
-            workItems: [
-              { id: 1234567, title: "Dev", icon: "mdi-xml", colour: "blue darken-4" }
-            ],
-          },
-          {
-            id: 202,
-            workItems: [
-              { id: 1234568, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3" }
-            ],
-          },
-        ]
-      },
+      // {
+      //   id: 1,
+      //   title: 'BPayLoader 1.6',
+      //   tShirt: 50,
+      //   sprints: [
+      //     {
+      //       id: 1424201, //{feature num} + {sprint num to two decimal places}
+      //       workItems: [
+      //         { id: 12345, title: "Dev", icon: "mdi-xml", colour: "blue darken-4" },
+      //         { id: 12348, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3" }
+      //       ],
+      //     },
+      //     {
+      //       id: 102,
+      //       workItems: [
+      //         { id: 12346, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3" }
+      //       ],
+      //     },
+      //   ]
+      // },
+      // {
+      //   id: 2,
+      //   title: 'NEWCAPP 2.1',
+      //   tShirt: 100,
+      //   sprints: [
+      //     {
+      //       id: 201,
+      //       workItems: [
+      //         { id: 1234567, title: "Dev", icon: "mdi-xml", colour: "blue darken-4" }
+      //       ],
+      //     },
+      //     {
+      //       id: 202,
+      //       workItems: [
+      //         { id: 1234568, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3" }
+      //       ],
+      //     },
+      //   ]
+      // },
     ],
     numSprints: 5,
     workItems: [
@@ -58,8 +59,16 @@ export default new Vuex.Store({
       let defaultFeature = {
         id: numFeatures + 1,
         title: 'placeholder 1.0',
-        tShirt: 50
+        tShirt: 50,
+        sprints: []
       } 
+      for (let i = 0; i < state.numSprints; i++) {
+        let newSprint = {
+          id: Date.now() * 10 + i,
+          workItems: []
+        }
+        defaultFeature.sprints.push(newSprint)
+      }
       state.features.push(defaultFeature);
     },
     updateFeatureTitle(state, payload) {
@@ -76,10 +85,10 @@ export default new Vuex.Store({
     updateSprints(state, payload) {
       let feature = state.features.filter(feature => feature.id === payload.id)[0];
     },
-    updateSprintWorkItems(state, sprintWorkItems, featureID, sprintID) {
-      let feature = state.features.filter(feature => feature.id === featureID)[0];
-      let sprint = feature.sprints.filter(sprint => sprint.id = sprintID)[0];
-      sprint.workItems = sprintWorkItems
+    updateSprintWorkItems(state, payload) {
+      let feature = state.features.filter(feature => feature.id === payload.featureID)[0];
+      let sprint = feature.sprints.filter(sprint => sprint.id === payload.sprintID)[0];
+      sprint.workItems = payload.value
     }
   },
   actions: {
@@ -87,8 +96,8 @@ export default new Vuex.Store({
       commit('updateSprints', sprints)
     },
     updateSprintWorkItems({ commit }, payload) {
-      console.log(payload.value, payload,featureid, payload.sprintID);
-      // commit('udpateSprintWorkItems', sprintWorkItems, featureID, sprintID)
+      console.log(payload.value, payload.featureid, payload.sprintID);
+      commit('updateSprintWorkItems', payload)
     }
   },
   getters: {

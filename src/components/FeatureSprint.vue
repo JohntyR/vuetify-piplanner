@@ -3,15 +3,21 @@
   rounded
   height="100%"
 >
-  <draggable
-    v-model="workItemList"
+  <v-list
+    height="100%"
   >
-    <div v-for="workItem in workItemList" :key="workItem.id">
-      <WorkItem 
+    <draggable
+      v-model="workItemList"
+      class="list-group" 
+      group="workItemList"
+    >
+      <workItem 
+        v-for="workItem in workItemList" 
+        :key="workItem.id"
         :workItem="workItem"
       />
-    </div>
-  </draggable>
+    </draggable>
+  </v-list>
 </v-card>
 </template>
 
@@ -38,16 +44,16 @@ export default {
   computed: {
       workItemList: {
         get() {
-          console.log(Date.now());
+          //console.log(Date.now()); // change ids of items to datestrings
           return this.$store.getters.getSprintWorkItems(this.featureID, this.sprintID)
         },
         set(value) {
+          console.log('firing set method');
           let payload = {
             value: value,
             featureID: this.featureID,
             sprintID: this.sprintID,
           }
-          
           this.$store.dispatch('updateSprintWorkItems', payload)
         }
       }
@@ -56,5 +62,7 @@ export default {
 </script>
 
 <style>
-
+.list-group {
+  height: 100%;
+}
 </style>

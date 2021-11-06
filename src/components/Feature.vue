@@ -1,7 +1,10 @@
 <template>
   <v-row>
     <v-col>
-      <v-card>
+      <v-card
+        height="100%"
+        outlined
+      >
         <v-card-text>
           <v-text-field
             solo
@@ -9,12 +12,12 @@
             @blur="updateFeatureTitle"
           ></v-text-field>
           <v-select
-          v-model="featureTshirt"
-          :items="items"
-          :value="featureTshirt"
-          label="T-shirt"
-          @change="updateFeatureTShirt"
-        ></v-select>
+            v-model="featureTshirt"
+            :items="items"
+            :value="featureTshirt"
+            label="T-shirt"
+            @change="updateFeatureTShirt"
+          ></v-select>
         </v-card-text>
       </v-card>
     </v-col>

@@ -43,21 +43,19 @@
         dense
         nav
         >
-        <v-list-item
-          v-for="workItem in workItems"
-          :key="workItem.title"
-        >
           <draggable
             v-model="workItems"
-            :group="{ pull: 'clone', put: 'false' }"
+            :group="{ pull: 'clone', put: 'false', name: 'workItemList' }"
+            class="list-group" 
+            :clone="cloneWorkItem"
           >
             <WorkItem 
+              v-for="workItem in workItems"
+              :key="workItem.title"
               :workItem="workItem"
             />
           </draggable>
-        </v-list-item>
         </v-list>
-
     </v-navigation-drawer>
 
     <v-app-bar app>
@@ -75,6 +73,8 @@
 <script>
 import draggable from "vuedraggable"
 import WorkItem from './components/WorkItem.vue'
+import cloneDeep from 'lodash/cloneDeep'
+
   export default {
     data: () => ({ 
       drawer: null,
@@ -93,8 +93,16 @@ import WorkItem from './components/WorkItem.vue'
           return this.$store.state.workItems
         },
         set(value) {
+          console.log('firing set method');
           this.$store.commit('updateWorkItems', value)
         }
+      }
+    },
+    methods: {
+      cloneWorkItem(component) {
+        let newComponent = cloneDeep(component)
+        newComponent.id = Date.now()
+        return newComponent
       }
     }
   }

@@ -4,6 +4,7 @@
       <v-col>
         <v-card
           height="100%"
+          outlined
         >
           <v-card-title>
             Q1 2022
@@ -19,7 +20,6 @@
         <v-card
           class="pa-2"
           outlined
-          tile
         >
           <v-card-text>
             <v-card-title>Sprint {{ n }}</v-card-title>
