@@ -19,27 +19,32 @@
       </v-card>
     </v-col>
     <v-col
-      v-for="s in $store.state.numSprints"
-      :key="s"
+      v-for="sprint in sprints"
+      :key="sprint.id"
     >
-      <v-card
-        rounded
-        height="100%"
-      >
-      </v-card>
+      <FeatureSprint
+        :sprint="sprint"
+        :featureID="feature.id"
+       />
     </v-col>
   </v-row>
 </template>
 
 <script>
+import FeatureSprint from '../components/FeatureSprint.vue'
+
 export default {
   props: ["feature"],
   data() {
     return {
       featureTitle: null,
       featureTshirt: null,
+      featureID: null,
       items: ['50', '100', '300'],
     }
+  },
+  beforeMount() {
+    this.featureID = this.feature.id; //in before mount so it happens prior to computed. 
   },
   mounted() {
     this.featureTitle = this.feature.title;
@@ -63,6 +68,16 @@ export default {
       this.$store.commit('updateFeatureTShirt', payload);
     }
   },
+  components: {
+    FeatureSprint
+  },
+  computed: {
+    sprints: {
+      get() {
+        return this.$store.getters.getFeatureSprints(this.featureID);
+      },
+    }
+  }
 }
 </script>
 

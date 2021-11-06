@@ -43,23 +43,19 @@
         dense
         nav
         >
-          <v-list-item
-            v-for="card in cards"
-            :key="card.title"
+        <v-list-item
+          v-for="workItem in workItems"
+          :key="workItem.title"
+        >
+          <draggable
+            v-model="workItems"
+            :group="{ pull: 'clone', put: 'false' }"
           >
-          <v-chip
-            class="ma-2"
-            :class="card.colour"
-            label
-            text-color="white"
-            draggable
-          >
-            <v-icon left>
-              {{ card.icon }}
-            </v-icon>
-            {{ card.title }}
-          </v-chip>
-          </v-list-item>
+            <WorkItem 
+              :workItem="workItem"
+            />
+          </draggable>
+        </v-list-item>
         </v-list>
 
     </v-navigation-drawer>
@@ -77,6 +73,8 @@
 </template>
 
 <script>
+import draggable from "vuedraggable"
+import WorkItem from './components/WorkItem.vue'
   export default {
     data: () => ({ 
       drawer: null,
@@ -84,11 +82,20 @@
         { title: "Todo", icon: "mdi-format-list-checks", to: "/", colour: "blue darken-4" },
         { title: "About", icon: "mdi-help-box", to: "/about", colour: "teal darken-3" },
       ],
-      cards: [
-        { title: "Dev", icon: "mdi-xml", colour: "blue darken-4" },
-        { title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3" },
-        { title: "Dep", icon: "mdi-graph-outline", colour: "red darken-4" },
-      ],
     }),
+    components: {
+      draggable,
+      WorkItem
+    },
+    computed: {
+      workItems: {
+        get() {
+          return this.$store.state.workItems
+        },
+        set(value) {
+          this.$store.commit('updateWorkItems', value)
+        }
+      }
+    }
   }
 </script>
