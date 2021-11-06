@@ -1,15 +1,18 @@
 <template>
-  <hello-world />
+<div>
+  <SprintGrid />
+</div>
 </template>
 
 <script>
-  import HelloWorld from '../components/HelloWorld'
+  import SprintGrid from '../components/SprintGrid.vue'
+
 
   export default {
     name: 'Home',
 
     components: {
-      HelloWorld,
+      SprintGrid
     },
   }
 </script>
