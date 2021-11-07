@@ -42,6 +42,7 @@
         <v-list
         dense
         nav
+        class="px-10"
         >
           <draggable
             v-model="workItems"

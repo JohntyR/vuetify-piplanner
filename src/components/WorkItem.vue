@@ -1,7 +1,9 @@
 <template>
-  <v-list-item>
+  <v-list-item
+  class="px-3"
+  >
     <v-chip
-      class="ma-2 work-item"
+      class="work-item"
       :class="workItem.colour"
       label
       text-color="white"
@@ -14,7 +16,7 @@
       </v-icon>
       {{ workItem.title }}
       <v-text-field
-        v-if="isNotTemplate"
+        v-if="isNotTemplate && workItem.title !='Dep'"
         v-model="workItemEstimate"
         class="px-2 centered-input"
         @blur="updateWorkItemEstimate"

@@ -12,43 +12,32 @@
         </v-card>
       </v-col>
       <v-col
-        v-for="n in $store.state.numSprints"
-        :key="n"
+        v-for="sprintHeader in sprintHeaderList"
+        :key="sprintHeader.id"
         cols="12"
         sm="2"
       >
-        <v-card
-          class="pa-2"
-          outlined
-        >
-          <v-card-text>
-            <v-card-title>Sprint {{ n }}</v-card-title>
-            <v-row
-              align="center"
-              class="mx-0"
-            >
-              <div class="grey--text">
-                Capacity: 15
-              </div>
-            </v-row>
-            <v-row
-              align="center"
-              class="mx-0"
-            >
-              <div class="grey--text">
-                Load: 0
-              </div>
-            </v-row>
-          </v-card-text>
-        </v-card>
+        <SprintHeader 
+          :sprint="sprintHeader"
+        />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import SprintHeader from"../components/SprintHeader.vue"
 export default {
-
+  components: {
+    SprintHeader,
+  },
+  computed: {
+    sprintHeaderList: {
+      get() {
+        return this.$store.state.sprintCapacities
+      }
+    },
+  }
 }
 </script>
 
