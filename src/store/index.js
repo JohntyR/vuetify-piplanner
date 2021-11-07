@@ -48,9 +48,9 @@ export default new Vuex.Store({
     ],
     numSprints: 5,
     workItems: [
-      { id: 12347, title: "Dev", icon: "mdi-xml", colour: "blue darken-4" },
-      { id: 12348, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3" },
-      { id: 12349, title: "Dep", icon: "mdi-graph-outline", colour: "red darken-4" },
+      { id: 12347, title: "Dev", icon: "mdi-xml", colour: "blue darken-4", estimate: null },
+      { id: 12348, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3", estimate: null },
+      { id: 12349, title: "Dep", icon: "mdi-graph-outline", colour: "red darken-4", estimate: null },
     ]
   },
   mutations: {
@@ -89,6 +89,17 @@ export default new Vuex.Store({
       let feature = state.features.filter(feature => feature.id === payload.featureID)[0];
       let sprint = feature.sprints.filter(sprint => sprint.id === payload.sprintID)[0];
       sprint.workItems = payload.value
+    },
+    deleteSprintWorkItem(state, payload) {
+      let feature = state.features.filter(feature => feature.id === payload.featureID)[0];
+      let sprint = feature.sprints.filter(sprint => sprint.id === payload.sprintID)[0];
+      sprint.workItems = sprint.workItems.filter(workItem => workItem.id !== payload.workItemID)
+    },
+    updateWorkItemEstimate(state, payload) {
+      let feature = state.features.filter(feature => feature.id === payload.featureID)[0];
+      let sprint = feature.sprints.filter(sprint => sprint.id === payload.sprintID)[0];
+      let workItem = sprint.workItems.filter(workItem => workItem.id === payload.workItemID)[0];
+      workItem.estimate = payload.estimate
     }
   },
   actions: {
@@ -96,8 +107,13 @@ export default new Vuex.Store({
       commit('updateSprints', sprints)
     },
     updateSprintWorkItems({ commit }, payload) {
-      console.log(payload.value, payload.featureid, payload.sprintID);
       commit('updateSprintWorkItems', payload)
+    },
+    deleteSprintWorkItems({ commit }, payload) {
+      commit('deleteSprintWorkItem', payload)
+    },
+    updateWorkItemEstimate({ commit }, payload) {
+      commit('updateWorkItemEstimate', payload)
     }
   },
   getters: {
@@ -109,6 +125,9 @@ export default new Vuex.Store({
       let feature = state.features.filter(feature => feature.id === featureID)[0];
       let sprint = feature.sprints.filter(sprint => sprint.id === sprintID)[0];
       return sprint.workItems
+    },
+    getTemplateWorkItemIds: (state) => {
+      return state.workItems.map(workItem => workItem.id)
     }
   },
   modules: {
