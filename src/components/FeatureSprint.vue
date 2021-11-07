@@ -15,6 +15,8 @@
         v-for="workItem in workItemList" 
         :key="workItem.id"
         :workItem="workItem"
+        :featureIDprop="fID"
+        :sprintIDprop="sprintID"
       />
     </draggable>
   </v-list>
@@ -28,7 +30,8 @@ export default {
   props: ["sprint", "featureID"],
   data() {
     return {
-      sprintID: null
+      sprintID: null,
+      fID: null,
     }
   },
   beforeMount() {
@@ -48,7 +51,6 @@ export default {
           return this.$store.getters.getSprintWorkItems(this.featureID, this.sprintID)
         },
         set(value) {
-          console.log('firing set method');
           let payload = {
             value: value,
             featureID: this.featureID,

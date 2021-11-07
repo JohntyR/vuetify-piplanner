@@ -93,7 +93,6 @@ import cloneDeep from 'lodash/cloneDeep'
           return this.$store.state.workItems
         },
         set(value) {
-          console.log('firing set method');
           this.$store.commit('updateWorkItems', value)
         }
       }
