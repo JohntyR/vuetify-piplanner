@@ -12,13 +12,14 @@
         </v-card>
       </v-col>
       <v-col
-        v-for="sprintHeader in sprintHeaderList"
+        v-for="(sprintHeader, index) in sprintHeaderList"
         :key="sprintHeader.id"
         cols="12"
         sm="2"
       >
         <SprintHeader 
           :sprint="sprintHeader"
+          :sprintIndex = "index"
         />
       </v-col>
     </v-row>

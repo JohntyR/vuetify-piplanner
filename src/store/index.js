@@ -8,11 +8,11 @@ export default new Vuex.Store({
     features: [],
     numSprints: 5,
     sprintCapacities: [
-      {ID: 91, Capacity: 15,},
-      {ID: 92, Capacity: 20,},
-      {ID: 93, Capacity: 19,},
-      {ID: 94, Capacity: 17,},
-      {ID: 95, Capacity: 22,},
+      {id: 91, Capacity: 15,},
+      {id: 92, Capacity: 20,},
+      {id: 93, Capacity: 19,},
+      {id: 94, Capacity: 17,},
+      {id: 95, Capacity: 22,},
     ],
     workItems: [
       { id: 12347, title: "Dev", icon: "mdi-xml", colour: "blue darken-4", estimate: null },
@@ -95,7 +95,25 @@ export default new Vuex.Store({
     },
     getTemplateWorkItemIds: (state) => {
       return state.workItems.map(workItem => workItem.id)
-    }
+    },
+    getSprintLoad: (state) => (sprintID) => {
+      let sprints = []
+      let sprintLoad = 0
+
+      state.features.forEach((feature) => {
+        sprints.push(feature.sprints[sprintID].workItems)
+      })
+
+      sprints.forEach((setOfWorkItems) => {
+        setOfWorkItems.forEach((workItem) => {
+          if (!isNaN(parseInt(workItem.estimate))){
+            sprintLoad += parseInt(workItem.estimate);
+          }
+        })
+      })
+      
+      return sprintLoad
+    },
   },
   modules: {
   }

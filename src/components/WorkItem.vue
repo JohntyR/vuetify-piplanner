@@ -71,8 +71,15 @@ export default {
   .work-item{
     width:100%;
   }
+  .centered-input {
+    max-width: 25%;
+  }
   .centered-input >>> input {
     text-align: center;
     padding-bottom: 0;
+  }
+  .v-chip >>> span {
+    justify-content: space-around;
+    width: 100%;
   }
 </style>

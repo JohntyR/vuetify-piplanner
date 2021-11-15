@@ -4,7 +4,7 @@
     outlined
   >
     <v-card-text>
-      <v-card-title>Sprint {{ sprint.id }}</v-card-title>
+      <v-card-title>Sprint {{ sprintIndex + 1}}</v-card-title>
       <v-row
         align="center"
         class="mx-0"
@@ -18,7 +18,7 @@
         class="mx-0"
       >
         <div class="grey--text">
-          Load: 0
+          Load: {{ sprintLoad }}
         </div>
       </v-row>
     </v-card-text>
@@ -27,7 +27,14 @@
 
 <script>
 export default {
-  props: ["sprint"]
+  props: ["sprint", "sprintIndex"],
+  computed: {
+    sprintLoad: {
+      get() {
+        return this.$store.getters.getSprintLoad(this.sprintIndex);
+      }
+    }
+  }
 }
 </script>
 
