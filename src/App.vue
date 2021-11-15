@@ -43,6 +43,7 @@
         dense
         nav
         class="px-10"
+        v-if="isSprintPlanner"
         >
           <draggable
             v-model="workItems"
@@ -80,8 +81,9 @@ import cloneDeep from 'lodash/cloneDeep'
     data: () => ({ 
       drawer: null,
       items: [
-        { title: "Todo", icon: "mdi-format-list-checks", to: "/", colour: "blue darken-4" },
+        { title: "Sprint Planner", icon: "mdi-format-list-checks", to: "/", colour: "blue darken-4" },
         { title: "About", icon: "mdi-help-box", to: "/about", colour: "teal darken-3" },
+        { title: "Capacity", icon: "mdi-human-capacity-increase", to: "/capacity", colour: "teal darken-3" },
       ],
     }),
     components: {
@@ -96,6 +98,9 @@ import cloneDeep from 'lodash/cloneDeep'
         set(value) {
           this.$store.commit('updateWorkItems', value)
         }
+      },
+      isSprintPlanner() {
+        return this.$route.name === "Home"
       }
     },
     methods: {
