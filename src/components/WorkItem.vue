@@ -1,7 +1,9 @@
 <template>
-  <v-list-item>
+  <v-list-item
+  class="px-3"
+  >
     <v-chip
-      class="ma-2 work-item"
+      class="work-item"
       :class="workItem.colour"
       label
       text-color="white"
@@ -14,7 +16,7 @@
       </v-icon>
       {{ workItem.title }}
       <v-text-field
-        v-if="isNotTemplate"
+        v-if="isNotTemplate && workItem.title !='Dep'"
         v-model="workItemEstimate"
         class="px-2 centered-input"
         @blur="updateWorkItemEstimate"
@@ -69,8 +71,15 @@ export default {
   .work-item{
     width:100%;
   }
+  .centered-input {
+    max-width: 25%;
+  }
   .centered-input >>> input {
     text-align: center;
     padding-bottom: 0;
+  }
+  .v-chip >>> span {
+    justify-content: space-around;
+    width: 100%;
   }
 </style>
