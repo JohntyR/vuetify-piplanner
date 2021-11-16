@@ -15,9 +15,9 @@ export default new Vuex.Store({
       {id: 95, Capacity: 22,},
     ],
     workItems: [
-      { id: 12347, title: "Dev", icon: "mdi-xml", colour: "blue darken-4", estimate: null },
-      { id: 12348, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3", estimate: null },
-      { id: 12349, title: "Dep", icon: "mdi-graph-outline", colour: "red darken-4", estimate: null },
+      { id: 12347, title: "Dev", icon: "mdi-xml", colour: "blue darken-4", estimate: null, description: "" },
+      { id: 12348, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3", estimate: null, description: "" },
+      { id: 12349, title: "Dep", icon: "mdi-graph-outline", colour: "red darken-4", estimate: null, description: "" },
     ]
   },
   mutations: {
