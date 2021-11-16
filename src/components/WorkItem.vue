@@ -34,7 +34,9 @@
           <v-text-field
             label="description"
             required
+            v-model="workItemDescription"
             :value="workItem.description"
+            @blur="updateWorkItemDescription"
             class="mx-2"
           ></v-text-field>
         </v-card>
@@ -59,6 +61,7 @@ export default {
       sprintID: null,
       workItemEstimate: null,
       menu: false,
+      workItemDescription: null,
     };
   },
   mounted() {
@@ -70,6 +73,7 @@ export default {
     this.featureID = this.featureIDprop;
     this.sprintID = this.sprintIDprop;
     this.workItemEstimate = this.workItem.estimate;
+    this.workItemDescription = this.workItem.description;
   },
   props: ["workItem", "featureIDprop", "sprintIDprop"],
   methods: {
@@ -90,7 +94,15 @@ export default {
       };
       this.$store.dispatch("updateWorkItemEstimate", payload);
     },
-    //TODO: add item to update description 
+    updateWorkItemDescription() {
+      let payload = {
+        featureID: this.featureID,
+        sprintID: this.sprintID,
+        workItemID: this.workItem.id,
+        description: this.workItemDescription,
+      };
+      this.$store.dispatch("updateWorkItemDescription", payload);
+    },
   },
 };
 </script>
@@ -107,7 +119,7 @@ export default {
   padding-bottom: 0;
 }
 .v-chip >>> span {
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
 }
 .disable-events {
