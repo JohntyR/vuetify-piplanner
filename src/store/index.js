@@ -15,9 +15,18 @@ export default new Vuex.Store({
       {id: 95, Capacity: 22,},
     ],
     workItems: [
-      { id: 12347, title: "Dev", icon: "mdi-xml", colour: "blue darken-4", estimate: null },
-      { id: 12348, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3", estimate: null },
-      { id: 12349, title: "Dep", icon: "mdi-graph-outline", colour: "red darken-4", estimate: null },
+      { id: 12347, title: "Dev", icon: "mdi-xml", colour: "blue darken-4", estimate: null, description: "" },
+      { id: 12348, title: "QA", icon: "mdi-bug-outline", colour: "teal darken-3", estimate: null, description: "" },
+      { id: 12349, title: "Dep", icon: "mdi-graph-outline", colour: "red darken-4", estimate: null, description: "" },
+    ],
+    featureBorderColours: [
+      'yellow lighten-3',
+      'teal lighten-3',
+      'amber lighten-3',
+      'blue lighten-3',
+      'orange lighten-3',
+      'deep-purple lighten-3',
+      'cyan lighten-3',
     ]
   },
   mutations: {
@@ -67,6 +76,12 @@ export default new Vuex.Store({
       let sprint = feature.sprints.filter(sprint => sprint.id === payload.sprintID)[0];
       let workItem = sprint.workItems.filter(workItem => workItem.id === payload.workItemID)[0];
       workItem.estimate = payload.estimate
+    },
+    updateWorkItemDescription(state, payload) {
+      let feature = state.features.filter(feature => feature.id === payload.featureID)[0];
+      let sprint = feature.sprints.filter(sprint => sprint.id === payload.sprintID)[0];
+      let workItem = sprint.workItems.filter(workItem => workItem.id === payload.workItemID)[0];
+      workItem.description = payload.description
     }
   },
   actions: {
@@ -81,6 +96,9 @@ export default new Vuex.Store({
     },
     updateWorkItemEstimate({ commit }, payload) {
       commit('updateWorkItemEstimate', payload)
+    },
+    updateWorkItemDescription({ commit }, payload) {
+      commit('updateWorkItemDescription', payload)
     }
   },
   getters: {
@@ -114,6 +132,12 @@ export default new Vuex.Store({
       
       return sprintLoad
     },
+    getRandomFeatureBorderColour: (state) => (featureID) => {
+      console.log(state.featureBorderColours.length);
+      let borderColourNum = featureID % state.featureBorderColours.length;
+      console.log(`featureID ${featureID}: borderColourNum ${borderColourNum}`);
+      return state.featureBorderColours[borderColourNum]
+    }
   },
   modules: {
   }
